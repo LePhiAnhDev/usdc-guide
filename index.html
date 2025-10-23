@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng Dẫn Mua USDC (Polygon) - Binance & OKX</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --text: #18181b;
+            --text-secondary: #71717a;
+            --border: #e4e4e7;
+            --bg: #ffffff;
+            --bg-secondary: #fafafa;
+            --code-bg: #f4f4f5;
+
+            /* Màu nền note mới */
+            --warning-bg-light: #fffbeb;
+            --info-bg-light: #eff6ff;
+            --danger-bg-light: #fef2f2;
+
+            /* Shadow tinh tế */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            /* Sử dụng font Inter */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            /* Điều chỉnh line-height cho dễ đọc */
+            color: var(--text);
+            background: var(--bg);
+            /* Grid background pattern */
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 24px 24px;
+            background-position: -1px -1px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            background: var(--bg);
+            /* Thêm background trắng để che grid ở content area */
+        }
+
+        header {
+            border-bottom: 1px solid var(--border);
+            padding: 48px 24px 32px;
+            /* Tăng padding bottom một chút */
+            text-align: center;
+            /* Căn giữa header */
+        }
+
+        h1 {
+            font-size: 2rem;
+            /* Giảm nhẹ h1 */
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+        }
+
+        nav {
+            display: flex;
+            gap: 32px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0 24px;
+            /* Thêm shadow cho nav khi sticky */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            /* Căn giữa nav */
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 16px 4px;
+            /* Thêm padding ngang nhẹ */
+            background: none;
+            border: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-secondary);
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease-in-out;
+            /* Transition mượt hơn */
+        }
+
+        .tab-btn:not(.active):hover {
+            color: var(--text);
+            background-color: var(--bg-secondary);
+            /* Thêm hover bg */
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            padding: 48px 24px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            /* Điều chỉnh h2 */
+            font-weight: 700;
+            margin-bottom: 32px;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            /* Điều chỉnh h3 */
+            font-weight: 600;
+            margin-top: 48px;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        .step {
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .step:last-child {
+            border-bottom: none;
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1.0625rem;
+            /* Tăng nhẹ font title */
+            display: flex;
+            align-items: center;
+        }
+
+        .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            /* Tăng kích thước */
+            height: 26px;
+            background: var(--primary);
+            /* Đổi sang màu primary */
+            color: white;
+            border-radius: 50%;
+            /* Bo tròn */
+            font-size: 0.875rem;
+            /* Tăng font-size */
+            margin-right: 12px;
+            /* Tăng margin */
+            font-weight: 500;
+            flex-shrink: 0;
+            /* Ngăn co lại */
+        }
+
+        ul {
+            margin-left: 24px;
+            margin-top: 8px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        code {
+            background: var(--code-bg);
+            padding: 3px 6px;
+            /* Tăng padding */
+            border-radius: 6px;
+            /* Tăng border-radius */
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.875rem;
+            border: 1px solid var(--border);
+            /* Thêm border nhẹ */
+        }
+
+        .highlight {
+            background: #fef08a;
+            padding: 2px 4px;
+            font-weight: 500;
+            border-radius: 4px;
+            /* Thêm border-radius */
+        }
+
+        .note {
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 8px;
+            border-left: 4px solid;
+            /* Tăng độ dày border */
+            font-size: 0.9375rem;
+            box-shadow: var(--shadow-sm);
+            /* Thêm shadow */
+        }
+
+        /* Dùng màu nền nhạt hơn */
+        .note-warning {
+            background: var(--warning-bg-light);
+            border-color: #f59e0b;
+            color: #92400e;
+        }
+
+        .note-info {
+            background: var(--info-bg-light);
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+
+        .note-danger {
+            background: var(--danger-bg-light);
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .section {
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            background: var(--bg-secondary);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-weight: 600;
+            border-left: 3px solid var(--primary);
+        }
+
+        .box {
+            background: var(--bg-secondary);
+            padding: 24px;
+            border-radius: 8px;
+            margin: 24px 0;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            /* Thêm shadow */
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            text-align: center;
+            padding: 48px 24px;
+            /* Tăng padding */
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 44px;
+            /* Đổi sang hình tròn */
+            height: 44px;
+            background: var(--primary);
+            /* Dùng màu primary */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            /* Bo tròn */
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, transform 0.2s ease-out;
+            /* Thêm transition transform */
+            transform: translateY(16px);
+            /* Hiệu ứng trượt lên */
+            box-shadow: var(--shadow-md);
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            /* Vị trí cuối */
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 32px 16px 24px;
+            }
+
+            h1 {
+                font-size: 1.875rem;
+            }
+
+            nav {
+                gap: 16px;
+                padding: 0 16px;
+                overflow-x: auto;
+            }
+
+            main {
+                padding: 32px 16px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media print {
+
+            nav,
+            .scroll-top {
+                display: none;
+            }
+
+            .tab-content {
+                display: block !important;
+            }
+
+            body {
+                font-family: 'Times New Roman', Times, serif;
+                color: #000;
+            }
+
+            code,
+            .note,
+            .box {
+                background: #eee;
+                border: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Hướng Dẫn Mua USDC (Polygon)</h1>
+            <p class="subtitle">Qua P2P bằng VND trên Binance và OKX</p>
+        </header>
+
+        <nav>
+            <button class="tab-btn active" onclick="switchTab(event, 'binance')">Binance</button>
+            <button class="tab-btn" onclick="switchTab(event, 'okx')">OKX</button>
+            <button class="tab-btn" onclick="switchTab(event, 'notes')">Lưu Ý</button>
+        </nav>
+
+        <main>
+            <div id="binance" class="tab-content active">
+                <h2>A. Hướng Dẫn Mua USDC trên Binance</h2>
+
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-num">1</span>
+                        Đăng nhập và Truy cập P2P
+                    </div>
+                    <ul>
+                        <li>Đăng nhập vào tài khoản Binance, vào <strong>Trang chủ</strong> → chọn
+                            <code>Giao dịch</code> → <code>P2P</code>.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-num">2</span>
+                        Thiết lập Lệnh Mua
+                    </div>
+                    <ul>
+                        <li>Đảm bảo bạn đang ở tab <code>Mua (Buy)</code>.</li>
+                        <li>Chọn đồng coin muốn mua là <code class="highlight">USDC</code>.</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-num">3</span>
+                        Chọn Người Bán (Merchant)
+                    </div>
+                    <ul>
+                        <li>Bạn sẽ thấy một danh sách người bán. Hãy lọc và chọn người bán dựa trên:
+                            <ul>
+                                <li><strong>Giao dịch (Trades):</strong> Nên chọn cao nhất.</li>
+                                <li><strong>Uy tín:</strong> Xem Sổ lệnh đã Tỷ lệ hoàn thành (nên trên 95%).</li>
+                                <li><strong>Giới hạn giao dịch:</strong> Chuyển số tiền trong mục Khớp giới hạn của
+                                    người bán (ví dụ: 150,000 - 500,000 VND).</li>
+                                <li><strong>Phương thức thanh toán:</strong> Chuyển khoản Ngân hàng (Bank Transfer).
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-num">4</span>
+                        Nhận Mua (Buy) ở Người Bán đã Chọn
+                    </div>
+                    <ul>
+                        <li>Nhấp số tiền VND bạn muốn chi (ví dụ: 150,000 VND). Hệ thống sẽ tự tính số lượng USDC tương
+                            ứng được nhận.</li>
+                        <li>Nhấn <code>Mua USDC</code>. Lệnh sẽ được tạo.</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-num">5</span>
+                        Đặt Lệnh và Chuyển Khoản
+                    </div>
+                    <ul>
+                        <li><strong>QUAN TRỌNG:</strong> Mở ứng dụng ngân hàng của bạn, chuyển chính xác số tiền đã
+                            <span class="highlight">nhập vào tài khoản ngân hàng</span> (memo) mà lệnh trên Binance cung
+                            cấp.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="note note-warning">
+                    <strong>Lưu ý:</strong> Đảm bảo chuyển đúng số tiền và ghi đúng memo/nội dung chuyển khoản theo yêu
+                    cầu để tránh lỗi.
+                </div>
+
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-num">6</span>
+                        Xác nhận và Nhận Coin
+                    </div>
+                    <ul>
+                        <li>Sau khi chuyển khoản thành công, quay lại ứng dụng Binance và nhấn vào nút <code
+                                class="highlight">"Đã thanh toán, thông báo cho người bán"</code> (Transferred, notify
+                            seller).</li>
+                        <li>Chờ vài phút. Người bán sẽ xác nhận đã nhận được tiền và mở khóa USDC cho bạn.</li>
+                        <li>USDC sẽ được chuyển vào <strong>Ví</strong> của bạn trên Binance.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="okx" class="tab-content">
+                <h2>B. Hướng Dẫn Mua USDC trên OKX</h2>
+
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-num">1</span>
+                        Đăng nhập và Truy cập P2P
+                    </div>
+                    <ul>
+                        <li>Truy cập tài khoản OKX, vào <strong>Trang chủ</strong> → chọn <code>Giao dịch P2P</code> →
+                            <code>P2P</code>.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-num">2</span>
+                        Thiết lập Lệnh Mua
+                    </div>
+                    <ul>
+                        <li>Đảm bảo bạn đang ở tab <code>Mua (Buy)</code>.</li>
+                        <li>Đảm bảo tiền tệ là <code class="highlight">VND</code>.</li>
+                        <li>Chọn đồng coin muốn mua là <code class="highlight">USDC</code>.</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-num">3</span>
+                        Chọn Người Bán
+                    </div>
+                    <ul>
+                        <li>Lọc người bán theo uy tín (lớn trên 95%).</li>
+                        <li>Kiểm tra giới hạn giao dịch và phương thức thanh toán (Bank Transfer).</li>
+                        <li>Nhấp vào <code>Mua (Buy)</code> ở người bán bạn đã chọn.</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-num">4</span>
+                        Đặt Lệnh và Chuyển Khoản
+                    </div>
+                    <ul>
+                        <li>Nhập số tiền VND bạn muốn chi (ví dụ: 150,000 VND). Hệ thống sẽ tự tính số lượng USDC tương
+                            ứng được nhận.</li>
+                        <li>Nhấn <code>Mua USDC</code>. Lệnh sẽ được tạo.</li>
+                        <li>Lấy thông tin tài khoản ngân hàng của người bán.</li>
+                        <li>Mở ngân hàng, chuyển chính xác số tiền và <span class="highlight">nhập đúng nội dung chuyển
+                                khoản (Ghi chú)</span> mà OKX cung cấp.</li>
+                    </ul>
+                </div>
+
+                <div class="note note-danger">
+                    <strong>Cực kỳ quan trọng:</strong> Nhập chính xác nội dung chuyển khoản theo yêu cầu của OKX. Sai
+                    nội dung có thể dẫn đến mất tiền!
+                </div>
+
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-num">5</span>
+                        Xác nhận và Nhận Coin
+                    </div>
+                    <ul>
+                        <li>Sau khi chuyển khoản, quay lại OKX và nhấn <code
+                                class="highlight">"Tôi đã thanh toán"</code> (I have paid).</li>
+                        <li>Chờ người bán xác nhận và giải phóng USDC.</li>
+                        <li>USDC sẽ được chuyển vào <strong>Ví</strong> của bạn trên OKX.</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Giai đoạn 2: Rút USDC từ OKX về Mạng Polygon</div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-num">1</span>
+                            Truy cập Ví và Rút tiền
+                        </div>
+                        <ul>
+                            <li>Vào mục <strong>Tài sản (Assets)</strong> → <code>Funding (Funding)</code>.</li>
+                            <li>Nhấn vào <code>Chuyển (Transfer)</code>.</li>
+                            <li>Chuyển USDC từ tài khoản giao dịch sang tài khoản
+                                <code>Giao dịch (Trading Account)</code>.
+                            </li>
+                            <li>Quay lại tài khoản Funding, tìm USDC và nhấn <code
+                                    class="highlight">Rút tiền (Withdraw)</code>.</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-num">2</span>
+                            Chọn Mạng Lưới (Network)
+                        </div>
+                        <ul>
+                            <li>Chọn <code class="highlight">USDC</code>.</li>
+                            <li>Chọn phương thức rút là <code class="highlight">On-chain</code>.</li>
+                            <li><strong>Địa chỉ (Address):</strong> Dán địa chỉ ví Polygon của bạn (ví dụ: 0x...).</li>
+                            <li><strong>Mạng lưới (Network):</strong> Kéo xuống và chọn <code
+                                    class="highlight">USDC-Polygon</code>. (OKX có thể ghi rõ là Polygon).</li>
+                        </ul>
+                    </div>
+
+                    <div class="note note-warning">
+                        <strong>Chú ý:</strong> Đảm bảo chọn đúng mạng Polygon. Chọn sai mạng có thể dẫn đến mất tiền
+                        vĩnh viễn!
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-num">3</span>
+                            Xác nhận Rút tiền
+                        </div>
+                        <ul>
+                            <li>Nhập số lượng USDC muốn rút.</li>
+                            <li>Kiểm tra lại phí rút và số mạng lưới.</li>
+                            <li>Nhấn <code>Gửi (Submit)</code> và hoàn thành xác minh bằng mật mã.</li>
+                            <li>Chờ giao dịch hoàn tất.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="notes" class="tab-content">
+                <h2>C. Các Lưu Ý Quan Trọng</h2>
+
+                <div class="note note-info">
+                    <strong>Chat P2P:</strong> Sử dụng tính năng chat P2P tích hợp trên sàn để liên lạc với người bán
+                    nếu có vấn đề. Không đề nghị chuyển khoản ngoài hệ thống.
+                </div>
+
+                <h3>An toàn Giao dịch</h3>
+                <ul>
+                    <li>Luôn sử dụng tính năng chat P2P tích hợp trên sàn để liên lạc</li>
+                    <li><strong>KHÔNG BAO GIỜ</strong> chuyển khoản ngoài hệ thống P2P chính thức</li>
+                    <li>Kiểm tra kỹ thông tin người bán: số giao dịch, tỷ lệ hoàn thành, đánh giá</li>
+                    <li>Chụp ảnh màn hình mọi bước giao dịch làm bằng chứng</li>
+                    <li>Không chia sẻ thông tin cá nhân nhạy cảm qua chat</li>
+                </ul>
+
+                <h3>Chọn Đúng Mạng Lưới</h3>
+                <ul>
+                    <li>Khi rút USDC, <strong>luôn kiểm tra kỹ mạng lưới</strong></li>
+                    <li>Phải chọn <code>Polygon</code> hoặc <code>USDC-Polygon</code></li>
+                    <li><strong class="highlight">TUYỆT ĐỐI KHÔNG</strong> chọn các mạng khác như:
+                        <ul>
+                            <li>Ethereum (ETH) - phí gas cực cao</li>
+                            <li>BSC (Binance Smart Chain)</li>
+                            <li>Tron (TRC20)</li>
+                            <li>Solana</li>
+                        </ul>
+                    </li>
+                    <li>Sai mạng = MẤT TIỀN</li>
+                </ul>
+
+                <div class="note note-danger">
+                    <strong>CẢNH BÁO:</strong> Chuyển tiền sai mạng lưới là lỗi phổ biến nhất và có thể dẫn đến mất toàn
+                    bộ số tiền. Luôn kiểm tra 2-3 lần trước khi xác nhận!
+                </div>
+
+                <footer>
+                    <p>Tài liệu hướng dẫn mua USDC (Polygon) qua P2P | Cập nhật: 10/2025</p>
+                    <p style="margin-top: 8px;">Lưu ý: Luôn kiểm tra kỹ thông tin trước khi giao dịch. Tài liệu này chỉ
+                        mang
+                        tính chất tham khảo.</p>
+                </footer>
+            </div>
+
+            <button class="scroll-top" onclick="scrollToTop()" id="scrollBtn" title="Lên đầu trang">↑</button>
+
+            <script>
+                function switchTab(event, tab) {
+                    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+                    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+                    document.getElementById(tab).classList.add('active');
+                    event.currentTarget.classList.add('active'); // Dùng currentTarget thay vì target
+                    // Bỏ cuộn lên đầu trang tự động khi chuyển tab để người dùng tự kiểm soát
+                    // window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+
+                const scrollBtn = document.getElementById('scrollBtn');
+                window.addEventListener('scroll', () => {
+                    scrollBtn.classList.toggle('visible', window.pageYOffset > 300);
+                });
+
+                function scrollToTop() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+
+                document.querySelectorAll('code').forEach(code => {
+                    code.style.cursor = 'pointer';
+                    code.title = 'Nhấn để sao chép';
+                    let originalText = code.textContent;
+
+                    code.addEventListener('click', () => {
+                        navigator.clipboard.writeText(originalText).then(() => {
+                            code.textContent = '✓ Đã chép';
+                            code.style.color = '#16a34a'; // Màu xanh lá
+                            setTimeout(() => {
+                                code.textContent = originalText;
+                                code.style.color = ''; // Quay về màu mặc định
+                            }, 1500);
+                        }).catch(err => {
+                            console.error('Không thể sao chép: ', err);
+                        });
+                    });
+                });
+            </script>
+</body>
+
+</html>
